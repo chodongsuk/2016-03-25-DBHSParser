@@ -2,7 +2,7 @@
  *
  * 동백고등학교 게시판 파서
  * Made By Gomsang , Use "Jericho" Library
- * You should write down gomsang lisence and "jericho" lisence
+ * You should write down gomsang license and "jericho" license
  *
  * */
 
@@ -75,7 +75,18 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        internetCheck(); //인터넷체크
+        if(isInternetCon()) { //false 반환시 if 문안의 로직 실행
+            Toast.makeText(MainActivity.this, "인터넷에 연결되지않아 불러오기를 중단합니다.", Toast.LENGTH_SHORT).show();
+            finish();
+        }else{ //인터넷 체크 통과시 실행할 로직
+            try {
+                process(); //네트워크 관련은 따로 쓰레드를 생성해야 UI 쓰레드와 겹치지 않는다. 그러므로 Thread 가 선언된 process 메서드를 호출한다.
+                BBSAdapter.notifyDataSetChanged();
+            } catch (Exception e) {
+                Log.d("ERROR", e + "");
+
+            }
+        }
 
         BBSList = (ListView)findViewById(R.id.listView); //리스트선언
         BBSAdapter = new BBSListAdapter(this);
@@ -96,16 +107,11 @@ public class MainActivity extends ActionBarActivity {
 
 
         url = URL_PRIMARY + GETNOTICE; //파싱하기전 PRIMARY URL 과 공지사항 URL 을 합쳐 완전한 URL 을만든다.
-        try {
-            process(); //네트워크 관련은 따로 쓰레드를 생성해야 UI 쓰레드와 겹치지 않는다. 그러므로 Thread 가 선언된 process 메서드를 호출한다.
-            BBSAdapter.notifyDataSetChanged();
-        } catch (Exception e) {
-            Log.d("ERROR", e + "");
 
-        }
 
 
     }
+
 
     private void process() throws IOException {
 
@@ -201,13 +207,7 @@ public class MainActivity extends ActionBarActivity {
     }
 
 
-    // <인터넷 체크부분
-    private void internetCheck() {
-        if(isInternetCon()) { //false 반환시 if 문안의 로직 실행
-            Toast.makeText(MainActivity.this, "인터넷에 연결되지않아 불러오기를 중단합니다.", Toast.LENGTH_SHORT).show();
-            finish();
-        }
-    }
+
 
     private boolean isInternetCon() {
         cManager=(ConnectivityManager)getSystemService(CONNECTIVITY_SERVICE);
@@ -215,8 +215,6 @@ public class MainActivity extends ActionBarActivity {
         wifi = cManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI); //와이파이 여부
         return !mobile.isConnected() && !wifi.isConnected(); //결과값을 리턴
     }
-
-    // 인터넷 체크 부분>
 
 
 
