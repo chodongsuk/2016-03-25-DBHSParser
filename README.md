@@ -1,7 +1,7 @@
 # DBHSParser
 This repository is Dongbaek highschool board parser. Use Jericho Library for board html source.
 
-Copyright (C) 2015 Gyeongrok Kim<devkgl1005@gmail.com> Everyone can consult this source code.
+Copyright (C) 2015 Gyeongrok Kim <devkgl1005@gmail.com> Everyone can consult this source code.
 
 # Library (Import) License
 GNU LESSER GENERAL PUBLIC LICENSE
