@@ -1,7 +1,9 @@
 /**
+ *
  * 동백고등학교 게시판 파서
  * Made By Gomsang , Use "Jericho" Library
  * You should write down gomsang lisence and "jericho" lisence
+ *
  * */
 
 package comgomsang.httpsgithub.dbhsparser;
