@@ -76,18 +76,6 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        if(isInternetCon()) { //false 반환시 if 문안의 로직 실행
-            Toast.makeText(MainActivity.this, "인터넷에 연결되지않아 불러오기를 중단합니다.", Toast.LENGTH_SHORT).show();
-            finish();
-        }else{ //인터넷 체크 통과시 실행할 로직
-            try {
-                process(); //네트워크 관련은 따로 쓰레드를 생성해야 UI 쓰레드와 겹치지 않는다. 그러므로 Thread 가 선언된 process 메서드를 호출한다.
-                BBSAdapter.notifyDataSetChanged();
-            } catch (Exception e) {
-                Log.d("ERROR", e + "");
-
-            }
-        }
 
         BBSList = (ListView)findViewById(R.id.listView); //리스트선언
         BBSAdapter = new BBSListAdapter(this);
@@ -101,13 +89,28 @@ public class MainActivity extends ActionBarActivity {
                         ListData mData = mListData.get(position); // 클릭한 포지션의 데이터를 가져온다.
                         String URL_BCS = mData.mUrl; //가져온 데이터 중 url 부분만 적출해낸다.
 
-                        startActivity(new Intent(Intent.ACTION_VIEW,Uri.parse(URL_PRIMARY + URL_BCS))); //적출해낸 url 을 이용해 URL_PRIMARY 와 붙이고
+                        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(URL_PRIMARY + URL_BCS))); //적출해낸 url 을 이용해 URL_PRIMARY 와 붙이고
 
                     }
                 });
 
 
         url = URL_PRIMARY + GETNOTICE; //파싱하기전 PRIMARY URL 과 공지사항 URL 을 합쳐 완전한 URL 을만든다.
+
+        if(isInternetCon()) { //false 반환시 if 문안의 로직 실행
+            Toast.makeText(MainActivity.this, "인터넷에 연결되지않아 불러오기를 중단합니다.", Toast.LENGTH_SHORT).show();
+            finish();
+        }else{ //인터넷 체크 통과시 실행할 로직
+            try {
+                process(); //네트워크 관련은 따로 쓰레드를 생성해야 UI 쓰레드와 겹치지 않는다. 그러므로 Thread 가 선언된 process 메서드를 호출한다.
+                BBSAdapter.notifyDataSetChanged();
+            } catch (Exception e) {
+                Log.d("ERROR", e + "");
+
+            }
+        }
+
+
 
 
 
