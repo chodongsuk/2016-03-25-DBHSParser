@@ -1,7 +1,9 @@
 # DBHSParser
-This repository is Dongbaek highschool board parser. Use Jericho Library for board html source.
+This repository is Dongbaek highschool board parser. Use Jericho Library for parse board html source.
 
 You should apply jericho 3.3 (in /app/src/libs/) for bbs parsing
+
+I recommend to use 'for' grammar for repeat html tag.
 
 Copyright (C) 2015 Gyeongrok Kim <devkgl1005@gmail.com> Everyone can consult this source code.
 
